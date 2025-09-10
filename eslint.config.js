@@ -31,6 +31,8 @@ export default defineConfig([
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'react/jsx-no-target-blank': 'off',
+      'react/prop-types': 'off',
     },
   },
   eslintConfigPrettier,

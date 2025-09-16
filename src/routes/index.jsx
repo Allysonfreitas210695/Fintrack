@@ -4,7 +4,7 @@ import PrivateLayout from '@/layouts/privateLayout'
 import PublicLayout from '@/layouts/publicLayout'
 import HomePage from '@/pages/home'
 import LoginPage from '@/pages/login'
-import RegisterPage from '@/pages/register'
+import SignupPage from '@/pages/signup'
 
 import { ROUTES_KEYS } from './routes.keys'
 import RoutesPrivate from './routes.private'
@@ -17,10 +17,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: LoginPage },
       { path: ROUTES_KEYS.AUTH.LOGIN, Component: LoginPage },
-      { path: ROUTES_KEYS.AUTH.REGISTER, Component: RegisterPage },
+      { path: ROUTES_KEYS.AUTH.SIGNUP, Component: SignupPage },
     ],
   },
-
   // 🔒 Rotas privadas
   {
     path: '/',

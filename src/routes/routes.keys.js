@@ -1,7 +1,7 @@
 export const ROUTES_KEYS = {
   AUTH: {
     LOGIN: '/auth/login',
-    REGISTER: '/auth/register',
+    SIGNUP: '/auth/signup',
   },
   PRIVATE: {
     HOME: '/',

@@ -4,6 +4,7 @@ import PrivateLayout from '@/layouts/privateLayout'
 import PublicLayout from '@/layouts/publicLayout'
 import HomePage from '@/pages/home'
 import LoginPage from '@/pages/login'
+import NotFoundPage from '@/pages/not-found'
 import SignupPage from '@/pages/signup'
 
 import { ROUTES_KEYS } from './routes.keys'
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  // 📄 Rota para página não encontrada (404)
+  {
+    path: ROUTES_KEYS.NOT_FOUND,
+    Component: NotFoundPage,
   },
 ])
 

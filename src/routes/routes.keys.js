@@ -6,4 +6,5 @@ export const ROUTES_KEYS = {
   PRIVATE: {
     HOME: '/',
   },
+  NOT_FOUND: '*',
 }

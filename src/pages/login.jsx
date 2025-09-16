@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
+import { toast } from 'sonner'
 import z from 'zod'
 
+import { useLogin } from '@/api/hooks/user'
 import { InputPassword } from '@/components/input-password'
 import { Button } from '@/components/ui/button'
 import {
@@ -42,8 +44,16 @@ const LoginPage = () => {
     },
   })
 
-  function handleSubmit(data) {
-    console.log(data)
+  const loginMutation = useLogin()
+
+  async function handleSubmit(data) {
+    try {
+      await loginMutation.mutateAsync(data)
+      toast.success('Login realizado com sucesso!')
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao fazer login. Tente novamente.')
+    }
   }
 
   return (

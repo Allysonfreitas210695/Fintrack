@@ -37,6 +37,7 @@ export default defineConfig([
       'react/prop-types': 'off',
       'react-refresh/only-export-components': 'off',
       '@tanstack/query/exhaustive-deps': 'error',
+      'no-useless-catch': 'off',
     },
   },
   eslintConfigPrettier,

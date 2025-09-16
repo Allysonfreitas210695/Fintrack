@@ -1,8 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2Icon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
+import { toast } from 'sonner'
 import z from 'zod'
 
+import { useSignup } from '@/api/hooks/user'
 import { InputPassword } from '@/components/input-password'
 import { Button } from '@/components/ui/button'
 import {
@@ -68,8 +71,20 @@ const SignupPage = () => {
     },
   })
 
-  function handleSubmit(data) {
-    console.log(data)
+  const loginMutation = useSignup()
+
+  async function handleSubmit(data) {
+    try {
+      await loginMutation.mutateAsync(data)
+      toast.success(
+        'Conta criada com sucesso! Verifique seu e-mail para ativar a conta.'
+      )
+    } catch (error) {
+      console.error(error)
+      toast.error(
+        'Erro ao criar conta. Verifique seus dados e tente novamente.'
+      )
+    }
   }
 
   return (
@@ -186,7 +201,14 @@ const SignupPage = () => {
                 />
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting && (
+                    <Loader2Icon className="animate-spin" />
+                  )}
                   Criar conta
                 </Button>
               </CardFooter>

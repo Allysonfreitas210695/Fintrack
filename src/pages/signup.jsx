@@ -200,7 +200,7 @@ const SignupPage = () => {
         </p>
         <Button
           variant="link"
-          className={'px-1'}
+          className={'px-1 text-amber-100'}
           asChild
           disabled={form.formState.isSubmitting}
         >

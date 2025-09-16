@@ -102,7 +102,7 @@ const LoginPage = () => {
         <p className="text-muted-foreground text-center opacity-50">
           Ainda não possui uma conta?
         </p>
-        <Button variant="link" className={'px-1'} asChild>
+        <Button variant="link" className={'px-1 text-amber-100'} asChild>
           <Link to={ROUTES_KEYS.AUTH.SIGNUP}>Crie agora</Link>
         </Button>
       </div>

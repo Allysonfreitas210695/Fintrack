@@ -1,10 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
-import { toast } from 'sonner'
-import z from 'zod'
+import { Link, Navigate } from 'react-router'
 
-import { useLogin } from '@/api/hooks/user'
 import { InputPassword } from '@/components/input-password'
 import { Button } from '@/components/ui/button'
 import {
@@ -22,39 +17,16 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useAuth } from '@/contexts/auth'
+import { useLoginForm } from '@/forms/hooks/user'
 import { ROUTES_KEYS } from '@/routes/routes.keys'
 
-const formSchema = z.object({
-  email: z
-    .email({ message: 'O e-mail é inválido.' })
-    .trim()
-    .min(1, { message: 'O e-mail é obrigatório.' }),
-  password: z
-    .string()
-    .trim()
-    .min(6, { message: 'A senha deve ter no mínimo 6 caracteres.' }),
-})
-
 const LoginPage = () => {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  })
+  const { login } = useAuth()
 
-  const loginMutation = useLogin()
+  const form = useLoginForm()
 
-  async function handleSubmit(data) {
-    try {
-      await loginMutation.mutateAsync(data)
-      toast.success('Login realizado com sucesso!')
-    } catch (error) {
-      console.error(error)
-      toast.error('Erro ao fazer login. Tente novamente.')
-    }
-  }
+  const handleSubmit = async (data) => await login(data)
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-3">

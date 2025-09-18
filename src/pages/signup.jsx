@@ -1,11 +1,6 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2Icon } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
-import { toast } from 'sonner'
-import z from 'zod'
+import { Link, Navigate } from 'react-router'
 
-import { useSignup } from '@/api/hooks/user'
 import { InputPassword } from '@/components/input-password'
 import { Button } from '@/components/ui/button'
 import {
@@ -25,67 +20,16 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useAuth } from '@/contexts/auth'
+import { useSignupForm } from '@/forms/hooks/user'
 import { ROUTES_KEYS } from '@/routes/routes.keys'
 
-export const formSchema = z
-  .object({
-    firstName: z.string().trim().min(1, {
-      message: 'O nome é obrigatório.',
-    }),
-    lastName: z.string().trim().min(1, {
-      message: 'O sobrenome é obrigatório.',
-    }),
-    email: z
-      .email({
-        message: 'O e-mail é inválido.',
-      })
-      .trim()
-      .min(1, {
-        message: 'O e-mail é obrigatório.',
-      }),
-    password: z.string().trim().min(6, {
-      message: 'A senha deve ter no mínimo 6 caracteres.',
-    }),
-    passwordConfirmation: z.string().trim().min(6, {
-      message: 'A confirmação de senha é obrigatória.',
-    }),
-    terms: z.boolean().refine((value) => value === true, {
-      message: 'Você precisa aceitar os termos.',
-    }),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: 'As senhas não coincidem.',
-    path: ['passwordConfirmation'],
-  })
-
 const SignupPage = () => {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-      terms: false,
-    },
-  })
+  const { signup } = useAuth()
 
-  const loginMutation = useSignup()
+  const form = useSignupForm()
 
-  async function handleSubmit(data) {
-    try {
-      await loginMutation.mutateAsync(data)
-      toast.success(
-        'Conta criada com sucesso! Verifique seu e-mail para ativar a conta.'
-      )
-    } catch (error) {
-      console.error(error)
-      toast.error(
-        'Erro ao criar conta. Verifique seus dados e tente novamente.'
-      )
-    }
-  }
+  const handleSubmit = async (data) => await signup(data)
 
   return (
     <ScrollArea className="flex h-screen w-screen flex-col items-center justify-center gap-3">

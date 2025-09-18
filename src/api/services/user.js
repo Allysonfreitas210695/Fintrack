@@ -51,4 +51,17 @@ export const UserService = {
       tokens: response.data.tokens,
     }
   },
+  /**
+   * Retorna o usuário autenticado.
+   * @returns {Object} Usuário autenticado.
+   */
+  me: async () => {
+    const response = await api.get('/users/me')
+    return {
+      id: response.data.id,
+      email: response.data.email,
+      firstName: response.data.first_name,
+      lastName: response.data.last_name,
+    }
+  },
 }

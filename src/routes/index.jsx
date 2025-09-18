@@ -8,10 +8,9 @@ import NotFoundPage from '@/pages/not-found'
 import SignupPage from '@/pages/signup'
 
 import { ROUTES_KEYS } from './routes.keys'
-import RoutesPrivate from './routes.private'
 
 const router = createBrowserRouter([
-  // 📌 Rotas públicas
+  // Rotas públicas
   {
     path: '/auth',
     Component: PublicLayout,
@@ -26,13 +25,8 @@ const router = createBrowserRouter([
     path: '/',
     Component: PrivateLayout,
     children: [
-      {
-        Component: RoutesPrivate,
-        children: [
-          { index: true, Component: HomePage },
-          { path: ROUTES_KEYS.PRIVATE.HOME, Component: HomePage },
-        ],
-      },
+      { index: true, Component: HomePage },
+      { path: ROUTES_KEYS.PRIVATE.HOME, Component: HomePage },
     ],
   },
   // 📄 Rota para página não encontrada (404)

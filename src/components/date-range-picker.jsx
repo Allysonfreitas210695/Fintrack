@@ -26,7 +26,7 @@ export const DatePickerWithRange = ({
             variant={'outline'}
             className={cn(
               'w-full justify-start text-left font-normal',
-              !value && 'text-muted-foreground'
+              'text-muted-foreground'
             )}
           >
             <CalendarIcon />

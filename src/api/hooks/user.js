@@ -1,8 +1,28 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from '@/constants/local-storage'
+import { useAuth } from '@/contexts/auth'
 
 import { UserService } from '../services/user'
+
+export const getUserBalanceQueryKey = ({ userId, from, to }) => {
+  if (!from || !to) {
+    return ['balance', userId]
+  }
+  return ['balance', userId, from, to]
+}
+
+export const useGetUserBalance = ({ from, to }) => {
+  const { user } = useAuth()
+  return useQuery({
+    queryKey: getUserBalanceQueryKey({ userId: user.id, from, to }),
+    queryFn: () => {
+      return UserService.getBalance({ from, to })
+    },
+    staleTime: 1000 * 60 * 5,
+    enabled: Boolean(from) && Boolean(to) && Boolean(user.id),
+  })
+}
 
 export const signupMutationKey = ['signup']
 

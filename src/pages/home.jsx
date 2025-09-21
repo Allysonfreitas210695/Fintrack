@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 
+import Balance from '@/components/balance'
 import DateSelector from '@/components/date-selector'
 import Header from '@/components/header'
 import { Button } from '@/components/ui/button'
@@ -20,6 +21,10 @@ const HomePage = () => {
               </Button>
             </div>
           </div>
+        </div>
+
+        <div className="grid grid-cols-[2fr_1fr] gap-6">
+          <Balance />
         </div>
       </div>
     </>

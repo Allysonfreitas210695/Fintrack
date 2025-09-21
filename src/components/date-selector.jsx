@@ -3,6 +3,7 @@ import { addMonths, format, isValid } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
+import { getUserBalanceQueryKey } from '@/api/hooks/user'
 import { useAuth } from '@/contexts/auth'
 
 import { DatePickerWithRange } from './date-range-picker'
@@ -45,14 +46,13 @@ const DateSelector = () => {
     queryParams.set('from', formatDateToQueryParam(date.from))
     queryParams.set('to', formatDateToQueryParam(date.to))
     navigate(`/?${queryParams.toString()}`)
-    // queryClient.invalidateQueries({
-    //   queryKey: [
-    //     'balance',
-    //     user.id,
-    //     formatDateToQueryParam(date.from),
-    //     formatDateToQueryParam(date.to),
-    //   ],
-    // })
+    queryClient.invalidateQueries({
+      queryKey: getUserBalanceQueryKey(
+        user.id,
+        formatDateToQueryParam(date.from),
+        formatDateToQueryParam(date.to)
+      ),
+    })
   }, [navigate, date, queryClient, user.id])
 
   return <DatePickerWithRange onChange={setDate} value={date} />
